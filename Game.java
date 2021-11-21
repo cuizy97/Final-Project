@@ -56,20 +56,33 @@ public class Game implements ActionListener{
       FileReader file = new FileReader("trivia.txt");
       BufferedReader reader = new BufferedReader(file);
       while(reader.ready()) {
+        // read in questions
         question = reader.readLine();
         answerA = reader.readLine();
         answerB = reader.readLine();
         answerC = reader.readLine();
         answerD = reader.readLine();
         correctAnswer = reader.readLine();
+        int crAnswer = Integer.parseInt(correctAnswer.getText()); // ??
+        // need to convert String to int in order to add to Question ArrayList
         points = reader.readLine();
+        int pts = Integer.parseInt(points.getText()); // ??
+        // need to convert String to int in order to add to Question ArrayList
         category = reader.readLine();
+        // add questions to questionList
+        Question ques = new Question(question, answerA, answerB, answerC, answerD, crAnswer, pts, category);
+        questionList.add(ques);
       }
       reader.close();
     }
     catch (IOException e) {
       System.out.println("An error occurred: " + e);
     }
+
+    questionLb.setText(question);
+    categoryLb.setText(category);
+    pointsLb.setText(pts);  // points?? getPoints()??
+    //scoreLb.setText();  // ????
 
 /*
 
@@ -81,16 +94,15 @@ public class Game implements ActionListener{
     frame.add(askName);
     frame.add(userName);
     frame.add(welcome);
-    frame.add(question);
+    frame.add(questionLb);
     frame.add(bt1);
     frame.add(bt2);
     frame.add(bt3);
     frame.add(bt4);
     frame.add(btNext);
 
-
-
-    // GUI settings: 
+    // Make frame visible
+		frame.setVisible(true);	
 
 
   }
