@@ -89,10 +89,11 @@ public class Game implements ActionListener{
     allDone.addActionListener(this);
     quit.addActionListener(this);
 
-    //start FileReader try block
+    //start FileReader try block to read questions from txt file
     try {
       FileReader file = new FileReader("trivia.txt");
       BufferedReader reader = new BufferedReader(file);
+      
       while(reader.ready()) {
         // read in questions
         question = reader.readLine();
@@ -100,8 +101,8 @@ public class Game implements ActionListener{
         answerB = reader.readLine();
         answerC = reader.readLine();
         answerD = reader.readLine();
-        correctAnswer = reader.readLine();
-        crAnswer = Integer.parseInt(correctAnswer); 
+        correctAnswer = reader.readLine(); // read String
+        crAnswer = Integer.parseInt(correctAnswer); // add int
         points = reader.readLine();
         pts = Integer.parseInt(points);
         category = reader.readLine();
@@ -109,9 +110,9 @@ public class Game implements ActionListener{
         Question ques = new Question(question, answerA, answerB, answerC, answerD, Integer.parseInt(correctAnswer), Integer.parseInt(points), category);
         questionList.add(ques);
       }
+
       reader.close(); //close reader
     }
-
     catch (IOException e) {
       System.out.println("An error occurred: " + e); //IOEXception catch
     }
@@ -126,7 +127,6 @@ public class Game implements ActionListener{
     frame.add(askName);
     frame.add(welcome);
     frame.add(userName);
-
     // have to be displayed from a loop of the questions list
     frame.add(questionLb);
     frame.add(categoryLb);
@@ -137,21 +137,20 @@ public class Game implements ActionListener{
     frame.add(pointsLb);
     frame.add(scoreLb);
     frame.add(btNext);
-
     // lastly:
     frame.add(allDone); // to get the final result conclusion
-    frame.add(quit);
+    frame.add(quit);    // can quit early, or quit at the end
 
     // Make frame visible
 		frame.setVisible(true);	
   }
 
-  /*
+  /* ActionPerformed
    @param The players inputs
   */
   public void actionPerformed(ActionEvent ae) {
     String uName = userName.getText();
-
+    // When entered a name
     if(!(ae.getActionCommand().equals(""))) { // if userName is not empty
       welcome.setText("Welcome! " + uName); 
     }
@@ -159,6 +158,7 @@ public class Game implements ActionListener{
     // when click the next button to move to next question
     if (ae.getActionCommand().equals("Next Question")) {
       i++;
+      // loop through each question that exists
       if(i < questionList.size()) {
         questionLb.setText(questionList.get(i).getQuestion());
         categoryLb.setText("Category: " + questionList.get(i).getCategory()); //simply here to show what category the question belongs to
@@ -180,20 +180,18 @@ public class Game implements ActionListener{
         scoreLb.setText(String.valueOf("Score:" + currentScore));
         btNext.setVisible(false); // set next button to not visible
       }
-
-
-      
     }
 
     //checks if the user chooses the correct answer and adds the appropriate number of points to display their current score
+    // when an option is selected
     if (ae.getActionCommand().equals(questionList.get(i).getAnswerA())) {
       userAnswer = 1;
+      // when the anser is correct
       if (userAnswer == questionList.get(i).getCorrectAnswer()) {
         morePoints = questionList.get(i).getPoints();
         // calculate current score
         currentScore = currentScore + morePoints;
-        scoreLb.setText(String.valueOf("Score: " + currentScore));
-        
+        scoreLb.setText(String.valueOf("Score: " + currentScore)); 
       }
     }
 
@@ -227,7 +225,7 @@ public class Game implements ActionListener{
       }
     }
 
-    // when clicked the all done button (game is over)
+    // when clicked the allDone button (game is over)
     if (ae.getActionCommand().equals("Done")){
       pointsLb.setText("Your final score is:");
       scoreLb.setText(String.valueOf(currentScore));
@@ -250,8 +248,8 @@ public class Game implements ActionListener{
         // close the try block and the writer object:
         bWriter.flush();
         bWriter.close();
-        
       } 
+
       catch (IOException e) {
         System.out.println("An error occurred: " + e);
 		  }
@@ -264,7 +262,5 @@ public class Game implements ActionListener{
       // print out user's final score in console
       System.out.println("You have quitted the trivia.\nFinal score: " + currentScore);
     }
-
-
   }
 }

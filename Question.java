@@ -1,20 +1,21 @@
 /*
  * This class runs our Trivia Game
+ Contains all the information of a question
  * @authors Ziyan Cui, Dillon Pearon, and Whenhan Zhu
  * @version 11/30/2021
 */
 class Question {
-  private String question;
-  private String answerA;
-  private String answerB;
+  private String question; // question text
+  private String answerA;  // options
+  private String answerB;  
   private String answerC;
   private String answerD;
-  private int correctAnswer;
-  private int points;
-  private String category;
+  private int correctAnswer; // correctAnswer
+  private int points;        // point worth
+  private String category;   // question category
   
   /* 
-   * Question Constructor
+   * Question Constructor: takes in all of this data to initialize a new Question object
    * @param all information about the question
   */
   Question(String aQuestion, String aAnswerA, String aAnswerB, String aAnswerC, String aAnswerD, int aCorrectAnswer, int aPoints, String aCategory) {
